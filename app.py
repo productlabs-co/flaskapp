@@ -1,12 +1,20 @@
+# app.py
+
 from flask import Flask
 
-app = Flask(__name__)
 
+def create_app(config_filename=None):
+    app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+    # Configuration settings can be loaded from a file
+    if config_filename:
+        app.config.from_pyfile(config_filename)
 
+    # Additional app configuration and setup can be done here
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Register blueprints, views, and other components
+    @app.route('/')
+    def hello_world():
+        return 'Hello, World!'
+
+    return app
